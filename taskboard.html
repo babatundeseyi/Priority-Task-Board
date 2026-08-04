@@ -26,14 +26,18 @@
           <input
             type="text"
             name="task-input-name"
-            class="task-input-name"
+            class="task-input-name js-task-input-name"
             placeholder="Enter task name..."
           />
         </div>
 
         <div class="task-input-priority-container">
           <p class="task-input-priority-header">Priority</p>
-          <select name="task-input-priority" class="task-input-priority">
+          <select
+            name="task-input-priority"
+            class="task-input-priority js-task-input-priority"
+          >
+            <option value="" selected disabled hidden>Select priority</option>
             <option value="High">High</option>
             <option value="Medium">Medium</option>
             <option value="Low">Low</option>
@@ -45,21 +49,28 @@
           <input
             type="text"
             name="task-input-description"
-            class="task-input-description"
+            class="task-input-description js-task-input-description"
             placeholder="Enter task description..."
           />
         </div>
 
         <div class="task-input-add-button-container">
           <p>
-            <button class="task-input-add-button">Add Task</button>
+            <button class="task-input-add-button js-task-input-add-button">
+              Add Task
+            </button>
           </p>
         </div>
       </div>
 
       <div class="task-filter-container">
         <p class="task-filter-heading">Filter by Priority</p>
-        <select name="task-filter" class="task-filter">
+        <select
+          name="task-filter"
+          class="task-filter js-task-filter"
+          onclick="filterElements()"
+        >
+          <option value="" selected disabled hidden>Select priority</option>
           <option value="High">High</option>
           <option value="Medium">Medium</option>
           <option value="Low">Low</option>
@@ -71,9 +82,13 @@
     <main>
       <div class="task-container">
         <section class="high-priority">
-          <h3 class="high-priority-task-header">High Priority</h3>
-          <div class="high-priority-task-container">
-            <div class="high-priority-task">
+          <h3 class="high-priority-task-header js-high-priority-task-header">
+            High Priority
+          </h3>
+          <div
+            class="high-priority-task-container js-high-priority-task-container"
+          >
+            <!-- <div class="high-priority-task">
               <div class="grid-1">
                 <p class="high-priority-task-name">Make $10k</p>
                 <p class="high-priority-task-description">I don't even know</p>
@@ -95,14 +110,20 @@
               <div class="grid-2">
                 <button class="high-priority-task-delete-button">Delete</button>
               </div>
-            </div>
+            </div> -->
           </div>
         </section>
 
         <section class="medium-priority">
-          <h3 class="medium-priority-task-header">Medium Priority</h3>
-          <div class="medium-priority-task-container">
-            <div class="medium-priority-task">
+          <h3
+            class="medium-priority-task-header js-medium-priority-task-header"
+          >
+            Medium Priority
+          </h3>
+          <div
+            class="medium-priority-task-container js-medium-priority-task-container"
+          >
+            <!-- <div class="medium-priority-task">
               <div class="grid-1">
                 <p class="medium-priority-task-name">Make $10k</p>
                 <p class="medium-priority-task-description">
@@ -115,14 +136,18 @@
                   Delete
                 </button>
               </div>
-            </div>
+            </div> -->
           </div>
         </section>
 
         <section class="low-priority">
-          <h3 class="low-priority-task-header">Low Priority</h3>
-          <div class="low-priority-task-container">
-            <div class="low-priority-task">
+          <h3 class="low-priority-task-header js-low-priority-task-header">
+            Low Priority
+          </h3>
+          <div
+            class="low-priority-task-container js-low-priority-task-container"
+          >
+            <!-- <div class="low-priority-task">
               <div class="grid-1">
                 <p class="low-priority-task-name">Make $10k</p>
                 <p class="low-priority-task-description">I don't even know</p>
@@ -131,12 +156,12 @@
               <div class="grid-2">
                 <button class="low-priority-task-delete-button">Delete</button>
               </div>
-            </div>
+            </div> -->
           </div>
         </section>
       </div>
     </main>
   </body>
 
-  <script></script>
+  <script src="scripts/taskboard.js"></script>
 </html>
