@@ -13,6 +13,9 @@ const addButton = document.querySelector('.js-task-input-add-button');
 const highPriorityTaskContainer = document.querySelector('.js-high-priority-task-container');
 const mediumPriorityTaskContainer = document.querySelector('.js-medium-priority-task-container');
 const lowPriorityTaskContainer = document.querySelector('.js-low-priority-task-container');
+const highfutureSectionContainer = document.querySelector('.js-future-section-container-high');
+const mediumfutureSectionContainer = document.querySelector('.js-future-section-container-medium');
+const lowfutureSectionContainer = document.querySelector('.js-future-section-container-low');
 
 //Task priority header variables
 const highPriorityTaskHeader = document.querySelector('.js-high-priority-task-header');
@@ -32,6 +35,10 @@ function filterElements() {
         highPriorityTaskContainer.classList.remove('hidden');
         mediumPriorityTaskContainer.classList.add('hidden');
         lowPriorityTaskContainer.classList.add('hidden');
+        //futuresection containers
+        highfutureSectionContainer.classList.remove('hidden');
+        mediumfutureSectionContainer.classList.add('hidden');
+        lowfutureSectionContainer.classList.add('hidden');
     } else if (taskFilter.value === "Medium") {
         //headers
         highPriorityTaskHeader.classList.add('hidden');
@@ -41,6 +48,10 @@ function filterElements() {
         highPriorityTaskContainer.classList.add('hidden');
         mediumPriorityTaskContainer.classList.remove('hidden');
         lowPriorityTaskContainer.classList.add('hidden');
+        //futuresection containers
+        highfutureSectionContainer.classList.add('hidden');
+        mediumfutureSectionContainer.classList.remove('hidden');
+        lowfutureSectionContainer.classList.add('hidden');
     } else if (taskFilter.value === "Low") {
         //headers
         highPriorityTaskHeader.classList.add('hidden');
@@ -50,6 +61,10 @@ function filterElements() {
         highPriorityTaskContainer.classList.add('hidden');
         mediumPriorityTaskContainer.classList.add('hidden');
         lowPriorityTaskContainer.classList.remove('hidden');
+        //futuresection containers
+        highfutureSectionContainer.classList.add('hidden');
+        mediumfutureSectionContainer.classList.add('hidden');
+        lowfutureSectionContainer.classList.remove('hidden');
     } else if (taskFilter.value === "All") {
         //headers
         mediumPriorityTaskHeader.classList.remove('hidden');
@@ -59,7 +74,12 @@ function filterElements() {
         mediumPriorityTaskContainer.classList.remove('hidden');
         highPriorityTaskContainer.classList.remove('hidden');
         lowPriorityTaskContainer.classList.remove('hidden');
+        //futuresection containers
+        highfutureSectionContainer.classList.remove('hidden');
+        mediumfutureSectionContainer.classList.remove('hidden');
+        lowfutureSectionContainer.classList.remove('hidden');
     }
+
 }
 
 //Funtions that creates the elements based on priority level
@@ -97,6 +117,12 @@ function addHighPriorityTask () {
 
         target.parentElement.parentElement.remove();
     });
+
+    if(highPriorityTaskContainer === "") {
+        highfutureSectionContainer.classList.remove('hidden-again');
+    } else {
+        highfutureSectionContainer.classList.add('hidden-again');
+    }
 }
 
 
@@ -134,6 +160,12 @@ function addMediumPriorityTask () {
 
         target.parentElement.parentElement.remove();
     });
+
+    if(mediumPriorityTaskContainer === "") {
+        mediumfutureSectionContainer.classList.remove('hidden-again');
+    } else {
+        mediumfutureSectionContainer.classList.add('hidden-again');
+    }
 }
 
 function addLowPriorityTask () {
@@ -170,6 +202,12 @@ function addLowPriorityTask () {
 
         target.parentElement.parentElement.remove();
     });
+
+    if(lowPriorityTaskContainer === "") {
+        lowfutureSectionContainer.classList.remove('hidden-again');
+    } else {
+        lowfutureSectionContainer.classList.add('hidden-again');
+    }
 }
 
 // event listener that adds the task onclick based on priority
