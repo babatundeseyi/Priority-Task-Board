@@ -1,3 +1,5 @@
+import { task, addToTask } from "./data/task.js";
+
 // Drop down menu variables
 const priorityOption = document.querySelector('.js-task-input-priority');
 const taskFilter = document.querySelector('.js-task-filter');
@@ -21,7 +23,6 @@ const lowfutureSectionContainer = document.querySelector('.js-future-section-con
 const highPriorityTaskHeader = document.querySelector('.js-high-priority-task-header');
 const mediumPriorityTaskHeader = document.querySelector('.js-medium-priority-task-header');
 const lowPriorityTaskHeader = document.querySelector('.js-low-priority-task-header');
-
 
 // Function for filter
 
@@ -81,6 +82,11 @@ function filterElements() {
     }
 
 }
+
+//event listener for filter 
+taskFilter.addEventListener('click', () => {
+    filterElements();
+});
 
 //Funtions that creates the elements based on priority level
 function addHighPriorityTask () {
@@ -223,6 +229,9 @@ addButton.addEventListener('click', () => {
     } else {
         alert('Select Priority');
     }
+
+    addToTask(taskNameInput, taskDescriptionInput); // stores the task in the task array
+    console.log(task);
 
     taskNameInput.value = "";
     taskDescriptionInput.value = "";

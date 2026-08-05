@@ -65,11 +65,7 @@
 
       <div class="task-filter-container">
         <p class="task-filter-heading">Filter by Priority</p>
-        <select
-          name="task-filter"
-          class="task-filter js-task-filter"
-          onclick="filterElements()"
-        >
+        <select name="task-filter" class="task-filter js-task-filter">
           <option value="" selected disabled hidden>Select priority</option>
           <option value="High">High</option>
           <option value="Medium">Medium</option>
@@ -135,5 +131,5 @@
     </main>
   </body>
 
-  <script src="scripts/taskboard.js"></script>
+  <script type="module" src="scripts/taskboard.js"></script>
 </html>
