@@ -1,4 +1,4 @@
-import { task, addToTask } from "./data/task.js";
+import { addToTask, addHighPriorityTask, addMediumPriorityTask, addLowPriorityTask} from "./data/task.js";
 
 // Drop down menu variables
 const priorityOption = document.querySelector('.js-task-input-priority');
@@ -25,7 +25,6 @@ const mediumPriorityTaskHeader = document.querySelector('.js-medium-priority-tas
 const lowPriorityTaskHeader = document.querySelector('.js-low-priority-task-header');
 
 // Function for filter
-
 function filterElements() {
     if (taskFilter.value === "High") {
         //headers
@@ -88,150 +87,27 @@ taskFilter.addEventListener('click', () => {
     filterElements();
 });
 
-//Funtions that creates the elements based on priority level
-function addHighPriorityTask () {
-    let highPriorityTask = document.createElement('div');
-    highPriorityTask.classList.add('high-priority-task');
-
-    let grid1 = document.createElement('div');
-    grid1.classList.add('grid-1');
-    highPriorityTask.appendChild(grid1);
-
-    let taskName = document.createElement('p');
-    taskName.classList.add('high-priority-task-name');
-    taskName.innerText = `${taskNameInput.value}`;
-    grid1.appendChild(taskName);
-
-    let taskDescription = document.createElement('p');
-    taskDescription.classList.add('high-priority-task-description');
-    taskDescription.innerText = `${taskDescriptionInput.value}`;
-    grid1.appendChild(taskDescription);
-
-    let grid2 = document.createElement('div');
-    grid2.classList.add('grid-2');
-    highPriorityTask.appendChild(grid2);
-
-    let deleteButton = document.createElement('button');
-    deleteButton.innerText = `Delete`;
-    deleteButton.classList.add('high-priority-task-delete-button');
-    grid2.appendChild(deleteButton);
-
-    highPriorityTaskContainer.appendChild(highPriorityTask);
-
-    deleteButton.addEventListener('click', (e) => {
-        let target = e.target;
-
-        target.parentElement.parentElement.remove();
-    });
-
-    if(highPriorityTaskContainer === "") {
-        highfutureSectionContainer.classList.remove('hidden-again');
-    } else {
-        highfutureSectionContainer.classList.add('hidden-again');
-    }
-}
-
-
-function addMediumPriorityTask () {
-    let mediumPriorityTask = document.createElement('div');
-    mediumPriorityTask.classList.add('medium-priority-task');
-
-    let grid1 = document.createElement('div');
-    grid1.classList.add('grid-1');
-    mediumPriorityTask.appendChild(grid1);
-
-    let taskName = document.createElement('p');
-    taskName.classList.add('medium-priority-task-name');
-    taskName.innerText = `${taskNameInput.value}`;
-    grid1.appendChild(taskName);
-
-    let taskDescription = document.createElement('p');
-    taskDescription.classList.add('medium-priority-task-description');
-    taskDescription.innerText = `${taskDescriptionInput.value}`;
-    grid1.appendChild(taskDescription);
-
-    let grid2 = document.createElement('div');
-    grid2.classList.add('grid-2');
-    mediumPriorityTask.appendChild(grid2);
-
-    let deleteButton = document.createElement('button');
-    deleteButton.innerText = `Delete`;
-    deleteButton.classList.add('medium-priority-task-delete-button');
-    grid2.appendChild(deleteButton);
-
-    mediumPriorityTaskContainer.appendChild(mediumPriorityTask);
-
-    deleteButton.addEventListener('click', (e) => {
-        let target = e.target;
-
-        target.parentElement.parentElement.remove();
-    });
-
-    if(mediumPriorityTaskContainer === "") {
-        mediumfutureSectionContainer.classList.remove('hidden-again');
-    } else {
-        mediumfutureSectionContainer.classList.add('hidden-again');
-    }
-}
-
-function addLowPriorityTask () {
-    let lowPriorityTask = document.createElement('div');
-    lowPriorityTask.classList.add('low-priority-task');
-
-    let grid1 = document.createElement('div');
-    grid1.classList.add('grid-1');
-    lowPriorityTask.appendChild(grid1);
-
-    let taskName = document.createElement('p');
-    taskName.classList.add('low-priority-task-name');
-    taskName.innerText = `${taskNameInput.value}`;
-    grid1.appendChild(taskName);
-
-    let taskDescription = document.createElement('p');
-    taskDescription.classList.add('high-priority-task-description');
-    taskDescription.innerText = `${taskDescriptionInput.value}`;
-    grid1.appendChild(taskDescription);
-
-    let grid2 = document.createElement('div');
-    grid2.classList.add('grid-2');
-    lowPriorityTask.appendChild(grid2);
-
-    let deleteButton = document.createElement('button');
-    deleteButton.innerText = `Delete`;
-    deleteButton.classList.add('low-priority-task-delete-button');
-    grid2.appendChild(deleteButton);
-
-    lowPriorityTaskContainer.appendChild(lowPriorityTask);
-
-    deleteButton.addEventListener('click', (e) => {
-        let target = e.target;
-
-        target.parentElement.parentElement.remove();
-    });
-
-    if(lowPriorityTaskContainer === "") {
-        lowfutureSectionContainer.classList.remove('hidden-again');
-    } else {
-        lowfutureSectionContainer.classList.add('hidden-again');
-    }
-}
+// Loads the dom if there's a task in localstorage
+addHighPriorityTask (highfutureSectionContainer);
+addMediumPriorityTask (mediumfutureSectionContainer);
+addLowPriorityTask (lowfutureSectionContainer);
 
 // event listener that adds the task onclick based on priority
 addButton.addEventListener('click', () => {
+
+    addToTask(taskNameInput, taskDescriptionInput, priorityOption); // stores the task in the task array
+    
     if (taskNameInput.value === "" && taskDescriptionInput.value === "") {
         alert('Enter a task');
     } else if (priorityOption.value === "High") {
-        addHighPriorityTask();
+        addHighPriorityTask (highfutureSectionContainer);
     } else if (priorityOption.value === "Medium") {
-        addMediumPriorityTask();
+        addMediumPriorityTask (mediumfutureSectionContainer);
     } else if (priorityOption.value === "Low") {
-        addLowPriorityTask();
+        addLowPriorityTask (lowfutureSectionContainer);
     } else {
         alert('Select Priority');
     }
-
-    addToTask(taskNameInput, taskDescriptionInput); // stores the task in the task array
-    console.log(task);
 
     taskNameInput.value = "";
     taskDescriptionInput.value = "";
