@@ -1,4 +1,4 @@
-import { addToTask, addHighPriorityTask, addMediumPriorityTask, addLowPriorityTask} from "./data/task.js";
+import { addToTask, addTask} from "./data/task.js";
 
 // Drop down menu variables
 const priorityOption = document.querySelector('.js-task-input-priority');
@@ -88,9 +88,9 @@ taskFilter.addEventListener('click', () => {
 });
 
 // Loads the dom if there's a task in localstorage
-addHighPriorityTask (highfutureSectionContainer);
-addMediumPriorityTask (mediumfutureSectionContainer);
-addLowPriorityTask (lowfutureSectionContainer);
+addTask ("high", highfutureSectionContainer);
+addTask ("medium", mediumfutureSectionContainer);
+addTask ("low", lowfutureSectionContainer);
 
 // event listener that adds the task onclick based on priority
 addButton.addEventListener('click', () => {
@@ -99,12 +99,12 @@ addButton.addEventListener('click', () => {
     
     if (taskNameInput.value === "" && taskDescriptionInput.value === "") {
         alert('Enter a task');
-    } else if (priorityOption.value === "High") {
-        addHighPriorityTask (highfutureSectionContainer);
-    } else if (priorityOption.value === "Medium") {
-        addMediumPriorityTask (mediumfutureSectionContainer);
-    } else if (priorityOption.value === "Low") {
-        addLowPriorityTask (lowfutureSectionContainer);
+    } else if (priorityOption.value === "high") {
+        addTask ("high", highfutureSectionContainer);
+    } else if (priorityOption.value === "medium") {
+        addTask ("medium", mediumfutureSectionContainer);
+    } else if (priorityOption.value === "low") {
+        addTask ("low", lowfutureSectionContainer);
     } else {
         alert('Select Priority');
     }

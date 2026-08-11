@@ -1,9 +1,6 @@
-const task = JSON.parse(localStorage.getItem('task'));
+const task = JSON.parse(localStorage.getItem('task')) || [];
 
-if (!task) {
-    task = [];
-}
-
+// This function adds the task inputs to the task array. Stores the tasks so they can be used to generate the html
 export function addToTask(taskNameInput, taskDescriptionInput, priorityOption) {
     task.push({
         id: Date.now(), // adds a unique id based on when the task was added
@@ -12,144 +9,83 @@ export function addToTask(taskNameInput, taskDescriptionInput, priorityOption) {
         priority: `${priorityOption.value}`
     });
 
-    saveToStorage();
+    saveToStorage(); //updates the storage everytime a new task is added
 }
 
-//Funtions that creates the elements based on priority level
-export function addHighPriorityTask (highfutureSectionContainer) {
-    let highPriorityTaskHTML = '';
+//Funtion that generates the html based on priority level
+// This function when called upon, accepts the priority as a parameter and uses it to generate the html of the tasks stored in the array based on their priority level
+// All the classes are generated from the priority using the same structure 
+export function addTask (priority, futureSectionContainer) {
+    const deleteButtonClass = `${priority}-priority-task-delete-button`;
+    const taskContainer = document.querySelector(
+        `.js-${priority}-priority-task-container`
+    );
 
+    // separate variables for the priority html for easy assignment
+    let highTaskHTML = '';
+    let mediumTaskHTML = '';
+    let lowTaskHTML = '';
+
+    //this function loops through each task in the task array and generates the html.
     task.forEach((taskObject) => {
         const {name, description, priority, id} = taskObject;
     
-        if (priority === "High") {
-            const html = `
-            <div class="high-priority-task">
-                <div class="grid-1">
-                <p class="high-priority-task-name">${name}</p>
-                <p class="high-priority-task-description">${description}</p>
-                </div>
-
-                <div class="grid-2">
-                <button class="high-priority-task-delete-button" data-task-id="${id}">Delete</button>
-                </div>
+        const html = `
+        <div class="${priority}-priority-task">
+            <div class="grid-1">
+            <p class="${priority}-priority-task-name">${name}</p>
+            <p class="${priority}-priority-task-description">${description}</p>
             </div>
-            `;
 
-            highPriorityTaskHTML += html;
+            <div class="grid-2">
+            <button class="${priority}-priority-task-delete-button" data-task-id="${id}">Delete</button>
+            </div>
+        </div>
+        `;
+
+        // after generating the html, it then assigns it to the correct html variable based on priority
+        if (priority === "high") {
+            highTaskHTML += html;
+        } else if (priority === "medium"){
+            mediumTaskHTML += html;
+        } else if (priority === "low") {
+            lowTaskHTML += html;
         }
-
-        
-    });
-
-    document.querySelector('.js-high-priority-task-container').innerHTML = highPriorityTaskHTML;
-
-    document.querySelectorAll('.high-priority-task-delete-button').forEach((deleteButton) => {
-        deleteButton.addEventListener('click', () => {
-            const clickedId = parseInt(deleteButton.dataset.taskId);
-            const index = task.findIndex(taskObject => taskObject.id === clickedId);
-
-            task.splice(index, 1);
-            saveToStorage();
-            addHighPriorityTask (highfutureSectionContainer);
-        });
-    });
-
-    if(highPriorityTaskHTML != '') {
-        highfutureSectionContainer.classList.add('hidden-again'); // adds the hidden class when a task is added
-    }
-}
-
-
-export function addMediumPriorityTask (mediumfutureSectionContainer) {
-    let mediumPriorityTaskHTML = '';
-
-    task.forEach((taskObject, index) => {
-        const {name, description, priority, id} = taskObject;
     
-        if (priority === "Medium") {
-            const html = `
-            <div class="medium-priority-task">
-                <div class="grid-1">
-                <p class="medium-priority-task-name">${name}</p>
-                <p class="medium-priority-task-description">${description}</p>
-                </div>
-
-                <div class="grid-2">
-                <button class="medium-priority-task-delete-button" data-task-id="${id}">Delete</button>
-                </div>
-            </div>
-            `;
-
-            mediumPriorityTaskHTML += html;
-        }
-
-        
     });
 
-    document.querySelector('.js-medium-priority-task-container').innerHTML = mediumPriorityTaskHTML;
-
-    document.querySelectorAll('.medium-priority-task-delete-button').forEach((deleteButton) => {
-        deleteButton.addEventListener('click', () => {
-            const clickedId = parseInt(deleteButton.dataset.taskId);
-            const index = task.findIndex(taskObject => taskObject.id === clickedId);
-
-            task.splice(index, 1);
-            saveToStorage();
-            addMediumPriorityTask (mediumfutureSectionContainer);
-        });
-    });
-
-    if(mediumPriorityTaskHTML != '') {
-        mediumfutureSectionContainer.classList.add('hidden-again');
+    // this assigns the html variables to their containers based on priority
+    if (priority === "high") {
+        taskContainer.innerHTML = highTaskHTML;
+    } else if (priority === "medium"){
+        taskContainer.innerHTML = mediumTaskHTML;
+    } else if (priority === "low") {
+        taskContainer.innerHTML = lowTaskHTML;
     }
-}
-
-
-export function addLowPriorityTask (lowfutureSectionContainer) {
-    let lowPriorityTaskHTML = '';
-
-    task.forEach((taskObject) => {
-        const {name, description, priority, id} = taskObject;
     
-        if (priority === "Low") {
-            const html = `
-            <div class="low-priority-task">
-                <div class="grid-1">
-                <p class="low-priority-task-name">${name}</p>
-                <p class="low-priority-task-description">${description}</p>
-                </div>
 
-                <div class="grid-2">
-                <button class="low-priority-task-delete-button" data-task-id="${id}">Delete</button>
-                </div>
-            </div>
-            `;
-
-            lowPriorityTaskHTML += html;
-        }
-
-        
-    });
-
-    document.querySelector('.js-low-priority-task-container').innerHTML = lowPriorityTaskHTML;
-
-    document.querySelectorAll('.low-priority-task-delete-button').forEach((deleteButton) => {
+    // loops through each delete button and adds a click event listener to delete from the task array
+    document.querySelectorAll(`.${deleteButtonClass}`).forEach((deleteButton) => {
         deleteButton.addEventListener('click', () => {
+            // finds the correct index of the clicked button using the assigned data id
             const clickedId = parseInt(deleteButton.dataset.taskId);
             const index = task.findIndex(taskObject => taskObject.id === clickedId);
 
-            task.splice(index, 1);
-            saveToStorage();
-            addLowPriorityTask (lowfutureSectionContainer);
+            task.splice(index, 1); // deletes from the array using the correct index
+            saveToStorage(); // updates the storage after deleting
+            addTask(priority, futureSectionContainer); // updates the page
         });
     });
 
-    if(lowPriorityTaskHTML != '') {
-        lowfutureSectionContainer.classList.add('hidden-again');
+    // checks the taskContainer and hides the futuresection when it is not empty
+    if(taskContainer.innerHTML != '') {
+        futureSectionContainer.classList.add('hidden-again'); // adds the hidden class when a task is added
     }
 }
 
+// saves the task array to local storage
 function saveToStorage () {
     localStorage.setItem('task', JSON.stringify(task));
 }
+
+// I chose localStorage over sessionStorage because of the nature of the project, it is a task board and we assume the user wants the data to be saved for as long they want it to be available. So the task doesn't get deleted automatically until the user deletes it manually unlike session storage which is used in cases where the data is to be saved only during that active session.
