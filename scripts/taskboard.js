@@ -94,19 +94,26 @@ addTask ("low", lowfutureSectionContainer);
 
 // event listener that adds the task onclick based on priority
 addButton.addEventListener('click', () => {
+    //validates if task field are filled and return if not
+    if (taskNameInput.value === "" && taskDescriptionInput.value === "") {
+        alert('Enter a task');
+        return;
+    }
+
+    // validates if priority is chosen and return if not
+    if (priorityOption.value === "") {
+        alert('Select Priority');
+        return;
+    }
 
     addToTask(taskNameInput, taskDescriptionInput, priorityOption); // stores the task in the task array
     
-    if (taskNameInput.value === "" && taskDescriptionInput.value === "") {
-        alert('Enter a task');
-    } else if (priorityOption.value === "high") {
+    if (priorityOption.value === "high") {
         addTask ("high", highfutureSectionContainer);
     } else if (priorityOption.value === "medium") {
         addTask ("medium", mediumfutureSectionContainer);
     } else if (priorityOption.value === "low") {
         addTask ("low", lowfutureSectionContainer);
-    } else {
-        alert('Select Priority');
     }
 
     taskNameInput.value = "";
