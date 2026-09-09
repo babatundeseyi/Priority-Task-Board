@@ -83,7 +83,7 @@ function filterElements() {
 }
 
 //event listener for filter 
-taskFilter.addEventListener('click', () => {
+taskFilter.addEventListener('change', () => {
     filterElements();
 });
 
